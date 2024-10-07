@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1118v4c" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.27.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.21.0">
+  <bpmn:collaboration id="Collaboration_0lbf8ch">
+    <bpmn:participant id="tok_studiow" name="Zaliczenie semestru" processRef="ZaliczenieSemestru" />
+  </bpmn:collaboration>
+  <bpmn:process id="ZaliczenieSemestru" name="Zaliczenie semestru" isExecutable="true" camunda:historyTimeToLive="180">
+    <bpmn:sequenceFlow id="Flow_1n4purv" sourceRef="StartEvent_1" targetRef="Gateway_0jnz3kp" />
+    <bpmn:sequenceFlow id="Flow_153fze9" name="Tak&#10;" sourceRef="Gateway_0jnz3kp" targetRef="Activity_04cyjgx" />
+    <bpmn:sequenceFlow id="Flow_1p45zn5" sourceRef="Activity_04cyjgx" targetRef="Gateway_1uqebrb" />
+    <bpmn:sequenceFlow id="Flow_0q4xapr" sourceRef="Activity_1j36kh4" targetRef="Event_120czat" />
+    <bpmn:scriptTask id="Activity_04cyjgx" name="Decyzja pozytywna" scriptFormat="groovy">
+      <bpmn:incoming>Flow_153fze9</bpmn:incoming>
+      <bpmn:outgoing>Flow_1p45zn5</bpmn:outgoing>
+      <bpmn:script>execution.setVariable("decyzja_czyPozytywna", true);
+execution.setVariable("decyzja_uzasadnienie", "Wystarczająco dużo punktów ECTS");</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="Activity_0nyy3zk" name="Decyzja negatywna" scriptFormat="groovy">
+      <bpmn:incoming>Flow_1nbzpft</bpmn:incoming>
+      <bpmn:outgoing>Flow_1lpinee</bpmn:outgoing>
+      <bpmn:script>execution.setVariable("decyzja_czyPozytywna", false);
+execution.setVariable("decyzja_uzasadnienie", "Za mało punktów ECTS");</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:endEvent id="Event_120czat">
+      <bpmn:incoming>Flow_0q4xapr</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:exclusiveGateway id="Gateway_0jnz3kp" name="czyZaliczyćSemestr?" default="Flow_153fze9">
+      <bpmn:incoming>Flow_1n4purv</bpmn:incoming>
+      <bpmn:outgoing>Flow_153fze9</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1nbzpft</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:startEvent id="StartEvent_1" camunda:formRef="ZlozeniePodania" camunda:formRefBinding="latest" camunda:initiator="inicjator">
+      <bpmn:outgoing>Flow_1n4purv</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="Gateway_1uqebrb">
+      <bpmn:incoming>Flow_1p45zn5</bpmn:incoming>
+      <bpmn:incoming>Flow_1lpinee</bpmn:incoming>
+      <bpmn:outgoing>Flow_1587pdq</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1587pdq" sourceRef="Gateway_1uqebrb" targetRef="Activity_1j36kh4" />
+    <bpmn:sequenceFlow id="Flow_1lpinee" sourceRef="Activity_0nyy3zk" targetRef="Gateway_1uqebrb" />
+    <bpmn:userTask id="Activity_1j36kh4" name="Odbiór decyzji" camunda:formRef="OdebranieDecyzji" camunda:formRefBinding="latest" camunda:assignee="${inicjator}">
+      <bpmn:incoming>Flow_1587pdq</bpmn:incoming>
+      <bpmn:outgoing>Flow_0q4xapr</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1nbzpft" name="Nie" sourceRef="Gateway_0jnz3kp" targetRef="Activity_0nyy3zk">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${podanie_punktyECTS&lt;18}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0lbf8ch">
+      <bpmndi:BPMNShape id="Participant_0s9rr2g_di" bpmnElement="tok_studiow" isHorizontal="true">
+        <dc:Bounds x="129" y="80" width="819" height="390" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1jbeyxe_di" bpmnElement="Activity_04cyjgx">
+        <dc:Bounds x="430" y="100" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0kiep52_di" bpmnElement="Activity_0nyy3zk">
+        <dc:Bounds x="430" y="330" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_120czat_di" bpmnElement="Event_120czat">
+        <dc:Bounds x="882" y="242" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0jnz3kp_di" bpmnElement="Gateway_0jnz3kp" isMarkerVisible="true">
+        <dc:Bounds x="295" y="225" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="346.5" y="269" width="85" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="232" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1uqebrb_di" bpmnElement="Gateway_1uqebrb" isMarkerVisible="true">
+        <dc:Bounds x="570" y="235" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_031rng0_di" bpmnElement="Activity_1j36kh4">
+        <dc:Bounds x="690" y="220" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1n4purv_di" bpmnElement="Flow_1n4purv">
+        <di:waypoint x="215" y="250" />
+        <di:waypoint x="295" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_153fze9_di" bpmnElement="Flow_153fze9">
+        <di:waypoint x="320" y="225" />
+        <di:waypoint x="320" y="140" />
+        <di:waypoint x="430" y="140" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="388" y="111" width="18" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1p45zn5_di" bpmnElement="Flow_1p45zn5">
+        <di:waypoint x="530" y="140" />
+        <di:waypoint x="595" y="140" />
+        <di:waypoint x="595" y="235" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0q4xapr_di" bpmnElement="Flow_0q4xapr">
+        <di:waypoint x="790" y="260" />
+        <di:waypoint x="882" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1nbzpft_di" bpmnElement="Flow_1nbzpft">
+        <di:waypoint x="320" y="275" />
+        <di:waypoint x="320" y="370" />
+        <di:waypoint x="430" y="370" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="327" y="320" width="17" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1587pdq_di" bpmnElement="Flow_1587pdq">
+        <di:waypoint x="620" y="260" />
+        <di:waypoint x="690" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1lpinee_di" bpmnElement="Flow_1lpinee">
+        <di:waypoint x="530" y="370" />
+        <di:waypoint x="595" y="370" />
+        <di:waypoint x="595" y="285" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

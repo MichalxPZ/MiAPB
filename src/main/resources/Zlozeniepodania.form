@@ -1,0 +1,44 @@
+{
+  "components": [
+    {
+      "label": "Numer albumu",
+      "type": "number",
+      "layout": {
+        "row": "Row_02cj93u",
+        "columns": null
+      },
+      "id": "Field_0ixcy1x",
+      "key": "podanie_nrAlbumu"
+    },
+    {
+      "label": "Punkty ects",
+      "type": "number",
+      "layout": {
+        "row": "Row_0dlxtqb",
+        "columns": null
+      },
+      "id": "Field_1fl5gob",
+      "key": "podanie_punktyECTS"
+    },
+    {
+      "label": "Uzasadnienie",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_18mmeuh",
+        "columns": null
+      },
+      "id": "Field_0wmjj23",
+      "key": "podanie_uzasadnienie",
+      "disabled": false
+    }
+  ],
+  "type": "default",
+  "id": "ZlozeniePodania",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.27.0"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.21.0",
+  "schemaVersion": 16
+}

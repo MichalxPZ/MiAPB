@@ -1,0 +1,68 @@
+{
+  "components": [
+    {
+      "label": "Numer albumu",
+      "type": "number",
+      "layout": {
+        "row": "Row_0z9nxug",
+        "columns": null
+      },
+      "id": "Field_1skabwt",
+      "key": "podanie_nrAlbumu",
+      "readonly": true
+    },
+    {
+      "label": "ects",
+      "type": "number",
+      "layout": {
+        "row": "Row_1ei4v3z",
+        "columns": null
+      },
+      "id": "Field_1iscivs",
+      "key": "podanie_punktyECTS",
+      "readonly": true
+    },
+    {
+      "label": "Uzasadnienie",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1ysnilj",
+        "columns": null
+      },
+      "id": "Field_0dwubhl",
+      "key": "podanie_uzasadnienie",
+      "readonly": true
+    },
+    {
+      "label": "Czy pozytywna?",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_1dg102c",
+        "columns": null
+      },
+      "id": "Field_1nlvp79",
+      "key": "decyzja_czyPozytywna",
+      "readonly": true
+    },
+    {
+      "label": "Uzasadnienie",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_1jn8t20",
+        "columns": null
+      },
+      "id": "Field_0ytreyd",
+      "key": "decyzja_uzasadnienie",
+      "readonly": true
+    }
+  ],
+  "type": "default",
+  "id": "OdebranieDecyzji",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.27.0"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.21.0",
+  "schemaVersion": 16
+}
